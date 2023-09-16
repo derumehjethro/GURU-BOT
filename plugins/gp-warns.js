@@ -11,9 +11,9 @@ let handler = async (m, { conn, args, groupMetadata}) => {
 ▢ *Warns :* ${warn}`)
 }
 
-handler.help = ['warns']
+handler.help = ['listwarns']
 handler.tags = ['group']
-handler.command = ['warns'] 
+handler.command = ['listwarns'] 
 handler.group = true
 
 export default handler

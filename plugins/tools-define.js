@@ -20,7 +20,7 @@ let handler = async (m, { conn, text }) => {
   const definition = firstEntry.definition;
   const example = firstEntry.example ? `*Example:* ${firstEntry.example}` : '';
 
-  const message = `*Word:* ${text}\n*Definition:* ${definition}\n${example}`;
+  const message = `📚 *Word:* ${text}\n\n📝 *Definition:* ${definition}\n\n${example}`;
   conn.sendMessage(m.chat, { text: message }, 'extendedTextMessage', { quoted: m });
 };
 

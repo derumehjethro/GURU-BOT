@@ -7,25 +7,25 @@ let handler = async (m, { conn, text, args, groupMetadata, usedPrefix, command }
         if (!who) throw `✳️ Tag or mention someone\n\n📌 Example : ${usedPrefix + command} @user`
         if (!(who in global.db.data.users)) throw `✳️ The user is not found in my database`
         let name = conn.getName(m.sender)
-        let warn = global.db.data.users[who].warn
+        let warn = global.db.data.users[who].warn + 1
         if (warn < war) {
             global.db.data.users[who].warn += 1
             m.reply(`
 ⚠️ *Warned User* ⚠️
 
 ▢ *Admin:* ${name}
-▢ *Usuario:* @${who.split`@`[0]}
-▢ *Warns:* ${warn + 1}/${war}
+▢ *User:* @${who.split`@`[0]}
+▢ *Warns:* ${warn}/${war}
 ▢ *Reason:* ${text}`, null, { mentions: [who] }) 
-            m.reply(`
+            /*m.reply(`
 ⚠️ *caution* ⚠️
 You received a warning from an admin
 
-▢ *Warns:* ${warn + 1}/${war} 
-if you receive *${war}* warnings you will be automatically removed from the group`, who)
+▢ *Warns:* ${warn}/${war} 
+if you receive *${war}* warnings you will be automatically removed from the group`, who)*/
         } else if (warn == war) {
             global.db.data.users[who].warn = 0
-            m.reply(`⛔ The user exceeded the *${war}* warnings will therefore be removed`)
+            m.reply(`⛔ The user reached the warning limit of *${war}* and will therefore be removed`)
             await time(3000)
             await conn.groupParticipantsUpdate(m.chat, [who], 'remove')
             m.reply(`♻️ You were removed from the group *${groupMetadata.subject}* because you have been warned *${war}* times`, who)
