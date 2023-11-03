@@ -663,6 +663,7 @@ export async function handler(chatUpdate) {
  * @param {import('@adiwajshing/baileys').BaileysEventMap<unknown>['group-participants.update']} groupsUpdate 
  */
 export async function participantsUpdate({ id, participants, action }) {
+    return; // disable this script @marvellous
     if (opts['self'])
         return
     // if (id in conn.chats) return // First login will spam
@@ -672,7 +673,6 @@ export async function participantsUpdate({ id, participants, action }) {
         await loadDatabase()
     let chat = global.db.data.chats[id] || {}
     let text = ''
-    return; // disable this script
     switch (action) {
      case 'add':
             if (chat.welcome) {
@@ -777,6 +777,7 @@ export async function participantsUpdate({ id, participants, action }) {
  * @param {import('@adiwajshing/baileys').BaileysEventMap<unknown>['groups.update']} groupsUpdate 
  */
 export async function groupsUpdate(groupsUpdate) {
+    return; // disable this script @marvellous
     if (opts['self'])
         return
     for (const groupUpdate of groupsUpdate) {
