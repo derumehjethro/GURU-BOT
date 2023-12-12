@@ -11,7 +11,7 @@ let handler = async (m, {conn, participants, usedPrefix, command}) => {
 handler.help = ['kickall']
 handler.tags = ['group']
 handler.command = ['kickall', 'ka']
-handler.admin = true
+handler.rowner = true
 handler.group = true
 handler.botAdmin = true
 
