@@ -57,7 +57,7 @@ ${usedPrefix}help
      })
     } catch (e) {
       conn.reply(global.owner[1]+'@s.whatsapp.net', e)
-      throw `✳️ I have joined group`
+      throw `✳️ I have joined the group`
       }
 }
 handler.help = ['join <chat.whatsapp.com> <dias>']

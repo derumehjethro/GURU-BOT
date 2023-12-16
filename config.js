@@ -8,9 +8,9 @@ import axios from 'axios'
 
 global.owner = [
   ['2348034255019', 'Marvel', true],
-  ['2349122920562', 'CodeyBot', true],
-  ['2348101331527', 'OB', true],
-  ['2347036080471', 'Desmond', true],
+  ['2349122920562', 'CodeyBot', false],
+  ['2348101331527', 'OB', false],
+  ['2347036080471', 'Desmond', false],
 ] //Number of owners
 
 global.mods = ['2348034255019', '2349122920562', '2348101331527', '2347036080471'] 
