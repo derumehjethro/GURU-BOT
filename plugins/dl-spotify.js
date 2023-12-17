@@ -1,19 +1,53 @@
-import fetch from 'node-fetch'
-let handler = async(m, { conn, text }) => {
-if (!text) throw `*ENTER NAME OF SONG*`
-try {
-let res = await fetch(`https://api.lolhuman.xyz/api/spotifysearch?apikey=${lolkeysapi}&query=${text}`)
-let json = await res.json()
-let { link } = json.result[0]
-let res2 = await fetch(`https://api.lolhuman.xyz/api/spotify?apikey=${lolkeysapi}&url=${link}`)
-let json2 = await res2.json()
-let { thumbnail, title, artists } = json2.result
-let spotifyi = `❒═════❬ 𝐒𝐏𝐎𝐓𝐈𝐅𝐘 ❭═════╾❒\n┬\n├‣✨ *TITLE:* ${title}\n┴\n┬\n├‣🗣️ *ARTIST:* ${artists}\n┴\n┬\n├‣🌐 *𝚄𝚁𝙻*: ${link}\n┴\n┬\n├‣💚 *SEARCH URL:* ${json2.result.link}\n┴`
-conn.sendFile(m.chat, thumbnail, 'error.jpg', spotifyi, m)
-let aa = await conn.sendMessage(m.chat, { audio: { url: json2.result.link }, fileName: `error.mp3`, mimetype: 'audio/mp4' }, { quoted: m })  
-if (!aa) return conn.sendFile(m.chat, json2.result.link, 'error.mp3', null, m, false, { mimetype: 'audio/mp4' }) 
-} catch {
-throw '* 𝙴𝚁𝚁𝙾𝚁*'
-}}
-handler.command = /^(spotify|song)$/i
-export default handler
+import fetch from 'node-fetch';
+import fs from 'fs';
+import path from 'path';
+import os from 'os';
+let handler = async (m, { conn, text }) => {
+    if (!text) {
+        console.log('No song name provided.');
+        throw `*Please enter a song name*`;
+    }
+  m.react('🎶')
+    const query = encodeURIComponent(text);
+       let spi = `https://api.lolhuman.xyz/api/spotifysearch?apikey=GataDios&query=${query}`
+
+       let res1 = await fetch(spi)
+       let data1 = await res1.json()
+       let link = data1.result[0].link
+
+       let apiurl = `https://vihangayt.me/download/spotify?url=${link}`
+       let res = await fetch(apiurl)
+         let data = await res.json()
+         let buffer = await data.data.url
+         let coverimage = data.data.cover_url
+         let name = data.song
+        let doc = {
+            audio: {
+              url: buffer
+            },
+            mimetype: 'audio/mpeg',
+            ptt: true,
+            waveform:  [100, 0, 100, 0, 100, 0, 100],
+            fileName: "Guru",
+        
+            contextInfo: {
+              mentionedJid: [m.sender],
+              externalAdReply: {
+                title: "↺ |◁   II   ▷|   ♡",
+                body: `Now playing: ${name}`,
+                thumbnailUrl: coverimage,
+                sourceUrl: link,
+                mediaType: 1,
+                renderLargerThumbnail: true
+              }
+            }
+        };
+        
+        await conn.sendMessage(m.chat, doc, { quoted: m });
+    
+};
+handler.help = ['spotify'];
+handler.tags = ['downloader'];
+handler.command = /^(spotify|song)$/i;
+
+export default handler;

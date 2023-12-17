@@ -11,9 +11,9 @@ let handler = async (m, { conn, text, usedPrefix, command, args, participants, i
  
   let name = m.sender 
   let [_, code] = text.match(linkRegex) || []
-  if (!args[0]) throw `✳️ Send the group link\n\n 📌 Example:\n *${usedPrefix + command}* <linkwa> <dias>\n\n_the number is the days the bot will be in the group_` 
+  if (!args[0]) throw `✳️ Send the group link\n\n 📌 Example:\n *${usedPrefix + command}* <walink> <days>\n\n_the number is the days the bot will be in the group_` 
   if (!code) throw `✳️ Link invalid`
-  if (!args[1]) throw `📌 Missing number of days\n\n Example:\n *${usedPrefix + command}* <linkwa> 2`
+  if (!args[1]) throw `📌 Missing number of days\n\n Example:\n *${usedPrefix + command}* <walink> 2`
   if (isNaN(args[1])) throw `✳️ Number only, representing the days the bot will be in the group!`
   let owbot = global.owner[1] 
   m.reply(`😎 Wait 3 seconds, I will join the group`)
@@ -41,7 +41,7 @@ I was invited by *${m.name}*`, m, {
      await conn.reply(res, `ok everyone relax 🤭`, 0)
      await conn.reply(global.owner[1]+'@s.whatsapp.net', `≡ *GROUP INVITATION*\n\n@${m.sender.split('@')[0]} ha invitado a *${conn.user.name}* al grupo\n\n*${await conn.getName(res)}*\n\n*ID* : ${res}\n\n📌 Link : ${args[0]}\n\nThe bot will exit automatically after \n\n${msToDate(global.db.data.chats[res].expired - now)}`, null, {mentions: [m.sender]})
      })
-     if (!e.length) await conn.reply(global.owner[1]+'@s.whatsapp.net', `≡ *INVITACIÓN A GRUPO*\n\n@${m.sender.split('@')[0]} has invited *${conn.user.name}* to group\n\n*${await conn.getName(res)}*\n\n*ID* : ${res}\n\n📌 link : ${args[0]}\n\nThe bot will exit automatically after\n\n ${msToDate(global.db.data.chats[res].expired - now)}`, null, {mentions: [m.sender]})
+     if (!e.length) await conn.reply(global.owner[1]+'@s.whatsapp.net', `≡ *GROUP INVITATION*\n\n@${m.sender.split('@')[0]} has invited *${conn.user.name}* to group\n\n*${await conn.getName(res)}*\n\n*ID* : ${res}\n\n📌 link : ${args[0]}\n\nThe bot will exit automatically after\n\n ${msToDate(global.db.data.chats[res].expired - now)}`, null, {mentions: [m.sender]})
      if (!e.length) await m.reply(`✳️ Successfully invite bot to group\n\n${await conn.getName(res)}\n\nThe bot will exit automatically after *${msToDate(global.db.data.chats[res].expired - now)}*`).then(async () => {
      let mes = `Hii 👋🏻
      
