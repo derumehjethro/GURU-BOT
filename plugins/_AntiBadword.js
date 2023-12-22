@@ -4,6 +4,7 @@ import axios from "axios"
 import fetch from "node-fetch"
 
 export async function before(m, { isAdmin, isBotAdmin }) {
+    return; // disable this script @marvellous
     if (m.isBaileys && m.fromMe)
         return !0
     if (!m.isGroup) return !1
