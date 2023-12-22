@@ -1,47 +1,37 @@
-import fetch from "node-fetch"
+import fetch from 'node-fetch';
 
-let handler = async (m, { conn, isOwner, usedPrefix, command, args }) => {
-    let query = "Oops! I need an input text. Try something like this:\n.midjourney man kissing";
-    let text;
+let handler = async (m, { conn, text, usedPrefix, command }) => {
+  if (!text) throw `*This command generates images from text prompts*\n\n*𝙴xample usage*\n*◉ ${usedPrefix + command} Beautiful anime girl*\n*◉ ${usedPrefix + command} Elon Musk in pink output*`;
+
+  try {
+    let imsg = conn.sendMessage(m.chat, {text: 'please wait , while i do some magic'}, { quoted: m });
+
+    const endpoint = `https://vihangayt.me/tools/lexicaart?q=${encodeURIComponent(text)}`;
+    const response = await fetch(endpoint);
+    const dataa = await response.json();
+
+    let data = dataa.data;
+    let randomDataIndex = Math.floor(Math.random() * data.length);
+    let randomData = data[randomDataIndex];
+    let images = randomData.images;
+    let randomImageIndex = Math.floor(Math.random() * images.length);
+    let img = images[randomImageIndex].url;
     
-    if (args.length >= 1) {
-        text = args.slice(0).join(" ");
-        m.reply(`Let's see what image I can dream up from "${text}"...`);
-    } else if (m.quoted && m.quoted.text) {
-        text = m.quoted.text;
-        m.reply(`Aha! Using your quoted text, "${text}", let's generate an image...`);
-    } else throw query;
     
-    try {
-        m.reply("Brewing up some AI magic... 🧙‍♂️");
-        await Draw(text).then((img) => {
-            conn.sendFile(m.chat, img, text, `*[Ta-da! Here's your result:]*\n"${text}"`, m);
-        });
-    } catch (e) {
-        throw 'Oh snap! Something went wrong while generating the image. 🥺';
+    if (response.ok) {
+      
+      await conn.sendFile(m.chat, img, 'image.png', null, fcon);
+
+
+    } else {
+      throw '*Image generation failed*';
     }
-}
+  } catch {
+    throw '*Oops! Something went wrong while generating images. Please try again later.*';
+  }
+};
 
-handler.help = ["imagine"];
-handler.tags = ["ai"];
-handler.command = /^imagine$/i;
-
+handler.help = ['dalle'];
+handler.tags = ['AI'];
+handler.command = ['imagine'];
 export default handler;
-
-async function Draw(prompt) {
-    const Blobs = await fetch(
-        "https://api-inference.huggingface.co/models/prompthero/openjourney-v2",
-        {
-            method: "POST",
-            headers: {
-                "content-type": "application/json",
-                Authorization: "Bearer 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",
-            },
-            body: JSON.stringify({ inputs: prompt }),
-        }
-    ).then((res) => res.blob());
-    
-    const arrayBuffer = await Blobs.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
-    return buffer;
-}
