@@ -17,12 +17,8 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
   const res = await fetch('https://api.simsimi.vn/v1/simtalk', options);
   const json = await res.json();
   
-  if (json.status === '200') {
-    const reply = json.message;
-    m.reply(reply);
-  } else {
-    throw json;
-  }
+  const reply = json.message;
+  m.reply(reply);
 };
 
 handler.help = ['bot'];
