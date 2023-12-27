@@ -34,7 +34,8 @@ let handler = async (m, { text, conn, usedPrefix, command }) => {
           key,
           type: 14,
           editedMessage: {
-            imageMessage: { caption: result }
+            // imageMessage: { caption: result }
+            conversation: result
           }
         }
       }, {});
@@ -57,7 +58,8 @@ let handler = async (m, { text, conn, usedPrefix, command }) => {
           key,
           type: 14,
           editedMessage: {
-            imageMessage: { caption: result }
+            // imageMessage: { caption: result }
+            conversation: result
           }
         }
       }, {});
